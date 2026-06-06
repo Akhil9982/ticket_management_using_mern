@@ -266,4 +266,4 @@ Contributions are what make the open-source community such an amazing place to l
 
 ---
 
-Made with ❤️ and the MERN Stack._
+Made with ❤️ and the MERN Stack.
