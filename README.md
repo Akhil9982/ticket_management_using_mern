@@ -171,7 +171,7 @@ backend/
 ```
 
 **🔌 API Documentation**  
-Base API URL: http://localhost:5000/api  
+Base API URL: http://localhost:3000/api  
 **Authentication Routes**
 
 | Method | Endpoint        | Required JSON Payload       | Access |
