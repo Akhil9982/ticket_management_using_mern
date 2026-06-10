@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
 const ticketRoutes = require("./routes/ticket.Routes");
 const cookieParser = require("cookie-parser");
@@ -6,6 +7,14 @@ const cookieParser = require("cookie-parser");
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+
+// Allow requests from Vite frontend
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
 // Routes - Endpoints
 app.use("/api/auth/users", authRoutes);

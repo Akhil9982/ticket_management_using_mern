@@ -31,7 +31,6 @@ async function registerUser(req, res) {
     process.env.JWT_SECRET,
   );
 
-  res.cookie("token", token);
 
   res.status(201).json({
     message: "User registered successfully",
@@ -41,6 +40,7 @@ async function registerUser(req, res) {
       email: user.email,
       role: user.role,
     },
+    token: token,
   });
 }
 
@@ -71,7 +71,7 @@ async function loginUser(req, res) {
     process.env.JWT_SECRET,
   );
 
-  res.cookie("token", token);
+
 
   res.status(200).json({
     message: "User Logged in successfully",
@@ -81,11 +81,11 @@ async function loginUser(req, res) {
       email: user.email,
       role: user.role,
     },
+    token: token,
   });
 }
 
 async function logoutUser(req, res) {
-  res.clearCookie("token");
   res.status(200).json({ message: "User logged out successfully" });
 }
 
