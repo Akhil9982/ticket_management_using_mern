@@ -5,8 +5,13 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const Profilemenu = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -14,6 +19,21 @@ const Profilemenu = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${BASE_URL}/api/auth/logout`);
+    } catch (error) {
+      console.error("Backend logout log failed:", error);
+    } finally {
+      // 2. CRITICAL: Clear the token and user data from Local Storage
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      // 3. Redirect the user back to the Sign-In page
+      navigate("/login");
+    }
   };
 
   return (
@@ -44,8 +64,8 @@ const Profilemenu = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleLogout}>Log out</MenuItem>
         </Menu>
       </div>
     </Box>

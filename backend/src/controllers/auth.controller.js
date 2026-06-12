@@ -30,7 +30,12 @@ async function registerUser(req, res) {
     },
     process.env.JWT_SECRET,
   );
-
+  res.cookie("token", token, {
+    httpOnly: true, // Prevents client-side JS from reading the cookie (XSS protection)
+    secure: false, // Set to true ONLY in production (requires HTTPS)
+    sameSite: "lax", // Allows cookies to be sent across localhost origins
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  });
 
   res.status(201).json({
     message: "User registered successfully",
@@ -40,7 +45,6 @@ async function registerUser(req, res) {
       email: user.email,
       role: user.role,
     },
-    token: token,
   });
 }
 
@@ -71,8 +75,12 @@ async function loginUser(req, res) {
     process.env.JWT_SECRET,
   );
 
-
-
+  res.cookie("token", token, {
+    httpOnly: true, // Prevents client-side JS from reading the cookie (XSS protection)
+    secure: false, // Set to true ONLY in production (requires HTTPS)
+    sameSite: "lax", // Allows cookies to be sent across localhost origins
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  });
   res.status(200).json({
     message: "User Logged in successfully",
     user: {
@@ -81,11 +89,11 @@ async function loginUser(req, res) {
       email: user.email,
       role: user.role,
     },
-    token: token,
   });
 }
 
 async function logoutUser(req, res) {
+  res.clearCookie("token");
   res.status(200).json({ message: "User logged out successfully" });
 }
 

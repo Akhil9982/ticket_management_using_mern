@@ -1,7 +1,9 @@
 import SignInIllustrations from "../assets/sign-in.svg?react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const onSubmit = async (data) => {
@@ -10,9 +12,8 @@ const Login = () => {
         `${BASE_URL}/api/auth/users/login`,
         data,
       );
-      if (response.data && response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      }
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      navigate("/Dashboard");
       console.log("Success: ", response.data);
     } catch (error) {
       console.error("Submission failed: ", error.response?.data || error);
@@ -79,12 +80,12 @@ const Login = () => {
           </div>
           <div className="px-8 py-4 bg-gray-700 text-center">
             <span className="text-gray-400">Don't have an account? </span>
-            <a
+            <Link
               className="font-medium text-indigo-500 hover:text-indigo-400"
-              href="#"
+              to="/Signup"
             >
               Sign up
-            </a>
+            </Link>
           </div>
         </div>
       </div>

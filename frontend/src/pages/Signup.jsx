@@ -1,13 +1,17 @@
 import SignUpIllustrations from "../assets/sign-up.svg?react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/auth/users/register`, data);
+      const response = await axios.post(
+        `${BASE_URL}/api/auth/users/register`,
+        data,
+      );
       console.log("Success: ", response.data);
     } catch (error) {
       console.error("Submission failed: ", error.response?.data || error);
@@ -138,12 +142,12 @@ const Signup = () => {
           </div>
           <div className="px-8 py-4 bg-gray-700 text-center">
             <span className="text-gray-400">Have an account? </span>
-            <a
+            <Link
               className="font-medium text-indigo-500 hover:text-indigo-400"
-              href="#"
+              to="/Login"
             >
               Sign in
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -25,32 +24,29 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const CustomizedTables = () => {
+const FetchTickets = () => {
   const [tickets, setTickets] = useState([]);
 
-  const getTickets = async () => {
-    try {
-    const currentToken = localStorage.getItem('token'); 
-    
-    if (!currentToken || currentToken === 'null') {
-      console.warn("Skipping API call: Token is not available yet.");
-      return;
-    }
-
-    const response = await axios.get('http://localhost:3000/api/tickets/getTickets', {
-      headers: {
-        Authorization: `Bearer ${currentToken}`
-      }
-    });
-    console.log("Tickets fetched successfully:", response.data);
-
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
-
   useEffect(() => {
+    let isMounted = true;
+
+    const getTickets = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/tickets/getTickets",
+        );
+        if (isMounted) {
+          setTickets(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching tickets:", error);
+      }
+    };
+
     getTickets();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const updateAssignedAgent = (ticketId, assignedAgent) => {
@@ -67,7 +63,7 @@ const CustomizedTables = () => {
   };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className="p-2" component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -113,4 +109,4 @@ const CustomizedTables = () => {
   );
 };
 
-export default CustomizedTables;
+export default FetchTickets;
