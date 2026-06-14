@@ -35,12 +35,12 @@ const Home = () => {
         </button>
 
         <div className="hidden md:flex gap-5 items-center">
-          <a href="">Features</a>
-          <a href="">Pricing</a>
-          <a href="">Documentation</a>
-          <a href="">Demo</a>
+          <Link>Features</Link>
+          <Link to="/">Pricing</Link>
+          <Link to="/">Documentation</Link>
+          <Link to="/">Demo</Link>
           <Link to="Login">
-            <Button variant="outlined" sx={{ textTransform: "none" }} href="#">
+            <Button variant="outlined" sx={{ textTransform: "none" }}>
               Login / Sign Up
             </Button>
           </Link>
@@ -48,13 +48,15 @@ const Home = () => {
 
         {isOpen && (
           <div className="absolute top-full left-0 w-full bg-indigo-200 shadow-md flex flex-col gap-4 p-5 md:hidden z-50">
-            <a href="">Features</a>
-            <a href="">Pricing</a>
-            <a href="">Documentation</a>
-            <a href="">Demo</a>
-            <Button variant="outlined" sx={{ textTransform: "none" }} href="#">
-              Login / Sign Up
-            </Button>
+            <Link>Features</Link>
+            <Link to="/">Pricing</Link>
+            <Link to="/">Documentation</Link>
+            <Link to="/">Demo</Link>
+            <Link to="Login">
+              <Button variant="outlined" sx={{ textTransform: "none" }}>
+                Login / Sign Up
+              </Button>
+            </Link>
           </div>
         )}
       </nav>
@@ -82,6 +84,7 @@ const Home = () => {
         <div className="right-section order-2 md:order-2 flex justify-center">
           <img
             src={HeroImg}
+            alt="Illustration"
             className="w-full max-w-[320px] md:max-w-150 h-auto"
           />
         </div>

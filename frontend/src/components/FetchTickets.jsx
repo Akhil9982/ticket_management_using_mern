@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-import Buttons from "./Buttons";
+import { Buttons } from "./Buttons";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,13 +28,12 @@ const FetchTickets = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
     let isMounted = true;
 
     const getTickets = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/tickets/getTickets",
-        );
+        const response = await axios.get(`${BASE_URL}/api/tickets/getTickets`);
         if (isMounted) {
           setTickets(response.data);
         }

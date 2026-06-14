@@ -21,6 +21,10 @@ const Profilemenu = () => {
     setAnchorEl(null);
   };
 
+  const handleMyAccount = () => {
+    navigate("/MyAccount");
+  };
+
   const handleLogout = async () => {
     try {
       await axios.post(`${BASE_URL}/api/auth/logout`);
@@ -64,7 +68,7 @@ const Profilemenu = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleMyAccount}>My account</MenuItem>
           <MenuItem onClick={handleLogout}>Log out</MenuItem>
         </Menu>
       </div>
