@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div>
       <nav className="flex gap-2 p-2">
-        <div className="logo text-blue-500 rotate-120 text-2xl">
+        <div className="logo text-indigo-500 rotate-120 text-2xl">
           <Link to="/" rel="noopener noreferrer">
             <ConfirmationNumberIcon />
           </Link>

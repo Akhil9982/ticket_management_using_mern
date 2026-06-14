@@ -4,20 +4,19 @@ const ticketModel = require("../models/ticket.model");
 // @route   GET /api/tickets
 // @access  Private
 const getTickets = async (req, res) => {
-  let tickets;
+  let query;
 
-  // 1. If the user is a Customer, only fetch their specific tickets
-  if (req.user.role === "customer") {
-    tickets = await ticketModel.find({ createdBy: req.user._id });
+  if (req.user.role === "Customer") {
+    query = ticketModel.find({
+      createdBy: req.user._id,
+    });
+  } else {
+    query = ticketModel.find();
   }
-  // 2. If the user is an Agent or Admin, fetch all tickets
-  else {
-    tickets = await ticketModel
-      .find()
-      // .populate() automatically swaps the user ID for their actual name/email!
-      .populate("createdBy", "name email")
-      .populate("assignedTo", "name");
-  }
+
+  const tickets = await query
+    .populate("createdBy", "name email role")
+    .populate("assignedTo", "name email role");
 
   res.status(200).json(tickets);
 };
@@ -28,8 +27,8 @@ const getTickets = async (req, res) => {
 const getTicket = async (req, res) => {
   const ticket = await ticketModel
     .findById(req.params.id)
-    .populate("createdBy", "name email")
-    .populate("assignedTo", "name");
+    .populate("createdBy", "name email role")
+    .populate("assignedTo", "name email role");
 
   if (!ticket) {
     return res.status(404).json({ message: "Ticket not found" });

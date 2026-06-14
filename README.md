@@ -32,8 +32,8 @@ A robust, role-based support ticket management system built with the MERN stack.
 | **1** | **Backend Scaffold**    | Express server setup, MongoDB Atlas integration, environment variables           |   ✅   |
 | **2** | **Security Layer**      | JWT authentication, bcrypt password hashing, custom RBAC middleware              |   ✅   |
 | **3** | **Core API Logic**      | RESTful routing and MVC controllers for Users, Tickets, and Comments             |   ✅   |
-| **4** | **Frontend Scaffold**   | Initialize Vite/React, set up React Router, configure Tailwind/UI library         |   ⏳   |
-| **5** | **State & Integration** | Connect React to API via Axios, manage global state, handle JWT in local storage |   ⏳   |
+| **4** | **Frontend Scaffold**   | Initialize Vite/React, set up React Router, configure Tailwind/UI library         |   ✅   |
+| **5** | **State & Integration** | Connect React to API via Axios, manage global state, handle JWT in local storage |   ✅   |
 | **6** | **Deployment**          | Deploy backend to Render/Railway and frontend to Vercel/Netlify                  |   ⏳   |
 
 ---
@@ -188,7 +188,7 @@ _Requires Authorization: Bearer \<token\> in headers._
 | POST   | /tickets/createTicket     | Create a ticket (title, description, priority)   | customer |
 | GET    | /tickets/:id              | Fetch details of a specific ticket               | All      |
 | PUT    | /tickets/:id              | Update ticket details (e.g., status)             | All      |
-| DELETE | /tickets/deleteTicket/:id | Delete a ticket entirely                         | admin    |
+| DELETE | /tickets/:id              | Delete a ticket entirely                         | admin    |
 
 **Comment Routes**  
 _Requires Authorization: Bearer \<token\> in headers._
