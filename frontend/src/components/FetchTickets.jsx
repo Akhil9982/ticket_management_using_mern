@@ -8,7 +8,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
 import { Buttons } from "./Buttons";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -23,14 +22,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
   },
 }));
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const FetchTickets = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
     let isMounted = true;
-
     const getTickets = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/tickets/getTickets`);
@@ -48,17 +45,35 @@ const FetchTickets = () => {
     };
   }, []);
 
-  const updateAssignedAgent = (ticketId, assignedAgent) => {
-    setTickets((prev) =>
-      prev.map((ticket) =>
-        ticket._id === ticketId
-          ? {
-              ...ticket,
-              assignedTo: assignedAgent,
-            }
-          : ticket,
-      ),
-    );
+  const updateAssignedAgent = async (ticketId, user) => {
+    try {
+      if (user?.role !== "agent") return;
+
+      const response = await axios.put(
+        `${BASE_URL}/api/tickets/${ticketId}`,
+        {
+          assignedTo: user._id || user.id,
+          status: "Assigned",
+        },
+        {
+          withCredentials: true,
+        },
+      );
+
+      setTickets((prev) =>
+        prev.map((ticket) =>
+          ticket._id === ticketId
+            ? {
+                ...ticket,
+                assignedTo: response.data?.assignedTo || { name: user.name },
+                status: response.data?.status || "Assigned",
+              }
+            : ticket,
+        ),
+      );
+    } catch (error) {
+      console.error("Assign failed", error.response?.data || error);
+    }
   };
 
   return (
@@ -95,9 +110,8 @@ const FetchTickets = () => {
 
               <StyledTableCell align="center">
                 <Buttons
-                  ticketId={ticket._id}
                   assignedTo={ticket.assignedTo}
-                  updateAssignedAgent={updateAssignedAgent}
+                  onAssign={(user) => updateAssignedAgent(ticket._id, user)}
                 />
               </StyledTableCell>
             </StyledTableRow>

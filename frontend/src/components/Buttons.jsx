@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
 
-const Buttons = () => {
+const Buttons = ({ onAssign, assignedTo }) => {
   const user = useMemo(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -17,6 +17,12 @@ const Buttons = () => {
 
   const rolePermissions = permissions[user?.role] || [];
 
+  const handleAssign = () => {
+    if (!user || !onAssign) return;
+
+    onAssign(user);
+  };
+
   return (
     <Box sx={{ "& button": { m: 1 } }}>
       <div>
@@ -26,8 +32,8 @@ const Buttons = () => {
           </Button>
         )}
 
-        {rolePermissions.includes("assign") && (
-          <Button variant="outlined" size="small">
+        {rolePermissions.includes("assign") && !assignedTo && (
+          <Button variant="outlined" size="small" onClick={handleAssign}>
             Assign
           </Button>
         )}
