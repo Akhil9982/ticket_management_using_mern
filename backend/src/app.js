@@ -3,7 +3,6 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
 const ticketRoutes = require("./routes/ticket.Routes");
 const cookieParser = require("cookie-parser");
-
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -11,7 +10,7 @@ app.use(cookieParser());
 // Allow requests from Vite frontend
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   }),
 );

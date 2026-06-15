@@ -29,25 +29,50 @@ const ViewTicket = () => {
   }, [BASE_URL, id]);
 
   const addComment = async () => {
+    if (!comment.trim()) return;
     try {
       const response = await axios.post(
         `${BASE_URL}/api/tickets/${id}/comments/addComments`,
         {
-          comment,
+          comment: comment.trim(),
         },
         {
           withCredentials: true,
-        },
+        }
       );
 
-      setTicket((prev) => ({
-        ...prev,
-        comments: response.data.comments,
-      }));
+      // 🔍 This log is critical to see exactly what we get back
+      console.log("POST Response Data:", response.data);
+
+      setTicket((prev) => {
+        // SCENARIO A: The response is the raw array of comments
+        if (Array.isArray(response.data)) {
+          return { ...prev, comments: response.data };
+        }
+        
+        // SCENARIO B: The response is the full ticket object OR wrapped like { comments: [...] }
+        if (response.data && Array.isArray(response.data.comments)) {
+          return { ...prev, comments: response.data.comments };
+        }
+        
+        // SCENARIO C: The response is just the single new comment object
+        if (response.data && response.data._id) {
+          return { 
+            ...prev, 
+            comments: [...(prev?.comments || []), response.data] 
+          };
+        }
+
+        // Fallback if nothing matches so we don't break the UI
+        console.warn("Unrecognized response format:", response.data);
+        return prev;
+      });
 
       setComment("");
     } catch (error) {
-      console.error("Comment failed", error.response?.data || error);
+      console.log(error.response?.status);
+      console.log(error.response?.data);
+      console.log(error.message);
     }
   };
 
@@ -112,10 +137,12 @@ const ViewTicket = () => {
                         className="bg-white rounded-2xl border p-4"
                       >
                         <div className="font-semibold text-indigo-700 mb-1">
-                          {item.user?.name || "User"}
+                          {item.senderId?.name || item.user?.name || "User"}
                         </div>
 
-                        <div className="text-slate-700">{item.comment}</div>
+                        <div className="text-slate-700 whitespace-pre-wrap">
+                          {item.message || item.comment}
+                        </div>
                       </div>
                     ))
                   ) : (

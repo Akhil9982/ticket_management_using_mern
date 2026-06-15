@@ -42,9 +42,10 @@ const getComments = async (req, res) => {
 // @route   POST /api/tickets/:ticketId/comments
 // @access  Private
 const addComment = async (req, res) => {
-  const { message } = req.body;
+  const { message, comment: incomingComment } = req.body;
+  const commentText = (message || incomingComment || "").trim();
 
-  if (!message) {
+  if (!commentText) {
     return res.status(400).json({ message: "Please add a message" });
   }
 
@@ -57,7 +58,7 @@ const addComment = async (req, res) => {
   const comment = await Comment.create({
     ticketId: req.params.ticketId,
     senderId: req.user._id, // Comes securely from our authMiddleware
-    message: message,
+    message: commentText,
   });
 
   // Fetch it again to populate the sender's details before sending back to React
