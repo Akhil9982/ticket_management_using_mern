@@ -28,6 +28,30 @@ const ViewTicket = () => {
     getTicket();
   }, [BASE_URL, id]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [ticketRes, commentsRes] = await Promise.all([
+          axios.get(`${BASE_URL}/api/tickets/${id}`, {
+            withCredentials: true,
+          }),
+          axios.get(`${BASE_URL}/api/tickets/${id}/comments/getComments`, {
+            withCredentials: true,
+          }),
+        ]);
+
+        setTicket({
+          ...ticketRes.data,
+          comments: commentsRes.data,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [BASE_URL, id]);
+
   const addComment = async () => {
     if (!comment.trim()) return;
     try {
@@ -38,7 +62,7 @@ const ViewTicket = () => {
         },
         {
           withCredentials: true,
-        }
+        },
       );
 
       // 🔍 This log is critical to see exactly what we get back
@@ -49,17 +73,17 @@ const ViewTicket = () => {
         if (Array.isArray(response.data)) {
           return { ...prev, comments: response.data };
         }
-        
+
         // SCENARIO B: The response is the full ticket object OR wrapped like { comments: [...] }
         if (response.data && Array.isArray(response.data.comments)) {
           return { ...prev, comments: response.data.comments };
         }
-        
+
         // SCENARIO C: The response is just the single new comment object
         if (response.data && response.data._id) {
-          return { 
-            ...prev, 
-            comments: [...(prev?.comments || []), response.data] 
+          return {
+            ...prev,
+            comments: [...(prev?.comments || []), response.data],
           };
         }
 
