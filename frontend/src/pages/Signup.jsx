@@ -11,6 +11,9 @@ const Signup = () => {
       const response = await axios.post(
         `${BASE_URL}/api/auth/users/register`,
         data,
+        {
+          withCredentials: true,
+        },
       );
       console.log("Success: ", response.data);
     } catch (error) {
