@@ -34,7 +34,7 @@ A robust, role-based support ticket management system built with the MERN stack.
 | **3** | **Core API Logic**      | RESTful routing and MVC controllers for Users, Tickets, and Comments             |   ✅   |
 | **4** | **Frontend Scaffold**   | Initialize Vite/React, set up React Router, configure Tailwind/UI library         |   ✅   |
 | **5** | **State & Integration** | Connect React to API via Axios, manage global state, handle JWT in local storage |   ✅   |
-| **6** | **Deployment**          | Deploy backend to Render/Railway and frontend to Vercel/Netlify                  |   ⏳   |
+| **6** | **Deployment**          | Deploy backend to Render/Railway and frontend to Vercel/Netlify                  |   ✅   |
 
 ---
 
@@ -94,10 +94,10 @@ The system uses strict Role-Based Access Control (RBAC) to ensure data privacy a
 - **VS Code:** Primary Integrated Development Environment (IDE).
 
 **
-**Deployment (Planned)**
+**Deployment**
 
-- **Frontend Hosting:** Vercel / Netlify
-- **Backend Hosting:** Render / Railway
+- **Frontend Hosting:** Vercel
+- **Backend Hosting:** Render
 
 ---
 
