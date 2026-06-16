@@ -34,7 +34,7 @@ async function registerUser(req, res) {
     httpOnly: true, // Prevents client-side JS from reading the cookie (XSS protection)
     secure: true, // Set to true ONLY in production (requires HTTPS)
     sameSite: "none", // Allows cookies to be sent across localhost origins
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+    maxAge: 30 * 24 * 60 * 60 * 1000,
   });
 
   res.status(201).json({
