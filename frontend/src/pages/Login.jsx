@@ -11,6 +11,9 @@ const Login = () => {
       const response = await axios.post(
         `${BASE_URL}/api/auth/users/login`,
         data,
+        {
+          withCredentials: true,
+        },
       );
       localStorage.setItem("user", JSON.stringify(response.data.user));
       navigate("/Dashboard");
