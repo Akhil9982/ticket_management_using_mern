@@ -8,12 +8,13 @@
 
 A robust, role-based support ticket management system built with the MERN stack. This application streamlines customer support by allowing users to submit issues, while empowering support agents and administrators with a centralized dashboard to track, update, and resolve tickets efficiently.
 
-> **🚧 Development Status: Phase 1 (Backend) Complete**
-> The RESTful API, database schema, and security layers are fully implemented and tested. Frontend development (React/Vite) is currently in progress.
+> **✅Project Status: Production Deployment Complete**
+> Full-stack MERN Ticket Management Dashboard successfully deployed. Frontend is hosted on Vercel and backend services are running on Render with complete API integration and role-based access control.
 
 ---
 
 ## 📑 Table of Contents
+
 1. [Project Roadmap](#project-roadmap)
 2. [Core Features](#core-features)
 3. [Tech Stack & Tools](#tech-stack--tools)
@@ -93,7 +94,7 @@ The system uses strict Role-Based Access Control (RBAC) to ensure data privacy a
 - **Git & GitHub:** Version control and repository hosting.
 - **VS Code:** Primary Integrated Development Environment (IDE).
 
-**
+\*\*
 **Deployment**
 
 - **Frontend Hosting:** Vercel
@@ -103,14 +104,15 @@ The system uses strict Role-Based Access Control (RBAC) to ensure data privacy a
 
 ## 🚀 Development Workflow & AI Integration
 
-To maximize efficiency and maintain high code quality, this project was developed using a modern, AI-assisted workflow. 
+To maximize efficiency and maintain high code quality, this project was developed using a modern, AI-assisted workflow.
 
 Large Language Models (**ChatGPT** and **Google Gemini**) were leveraged throughout the development lifecycle to:
-* Rapidly debug complex Node.js errors and MongoDB schema conflicts.
-* Brainstorm architectural approaches and security best practices (like RBAC).
-* Improve overall developer velocity and workflow optimization. 
 
-*Note: While AI was used as an advanced pair-programming tool, all system architecture, structural decisions, and final code implementation were critically evaluated and manually integrated.*
+- Rapidly debug complex Node.js errors and MongoDB schema conflicts.
+- Brainstorm architectural approaches and security best practices (like RBAC).
+- Improve overall developer velocity and workflow optimization.
+
+_Note: While AI was used as an advanced pair-programming tool, all system architecture, structural decisions, and final code implementation were critically evaluated and manually integrated._
 
 ---
 
@@ -182,13 +184,13 @@ Base API URL: http://localhost:3000/api
 **Ticket Routes**  
 _Requires Authorization: Bearer \<token\> in headers._
 
-| Method | Endpoint                  | Description                                      | Access   |
-| ------ | ------------------------- | ------------------------------------------------ | -------- |
-| GET    | /tickets/getTickets       | Fetch tickets (Customers see own; Staff see all) | All      |
-| POST   | /tickets/createTicket     | Create a ticket (title, description, priority)   | customer |
-| GET    | /tickets/:id              | Fetch details of a specific ticket               | All      |
-| PUT    | /tickets/:id              | Update ticket details (e.g., status)             | All      |
-| DELETE | /tickets/:id              | Delete a ticket entirely                         | admin    |
+| Method | Endpoint              | Description                                      | Access   |
+| ------ | --------------------- | ------------------------------------------------ | -------- |
+| GET    | /tickets/getTickets   | Fetch tickets (Customers see own; Staff see all) | All      |
+| POST   | /tickets/createTicket | Create a ticket (title, description, priority)   | customer |
+| GET    | /tickets/:id          | Fetch details of a specific ticket                | All      |
+| PUT    | /tickets/:id          | Update ticket details (e.g., status)             | All      |
+| DELETE | /tickets/:id          | Delete a ticket entirely                         | admin    |
 
 **Comment Routes**  
 _Requires Authorization: Bearer \<token\> in headers._
