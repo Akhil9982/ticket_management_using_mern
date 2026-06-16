@@ -32,9 +32,9 @@ async function registerUser(req, res) {
   );
   res.cookie("token", token, {
     httpOnly: true, // Prevents client-side JS from reading the cookie (XSS protection)
-    secure: false, // Set to true ONLY in production (requires HTTPS)
-    sameSite: "lax", // Allows cookies to be sent across localhost origins
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    secure: true, // Set to true ONLY in production (requires HTTPS)
+    sameSite: "none", // Allows cookies to be sent across localhost origins
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
   });
 
   res.status(201).json({
