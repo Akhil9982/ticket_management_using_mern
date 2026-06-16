@@ -33,9 +33,13 @@ const Profilemenu = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${BASE_URL}/api/auth/logout`);
+      await axios.post(
+        `${BASE_URL}/api/auth/users/logout`,
+        {},
+        { withCredentials: true },
+      );
     } catch (error) {
-      console.error("Backend logout log failed:", error);
+      console.error("Backend logout failed:", error);
     } finally {
       // 2. CRITICAL: Clear the token and user data from Local Storage
       localStorage.removeItem("token");
@@ -95,8 +99,7 @@ const Profilemenu = () => {
               mt: 1,
               borderRadius: 4,
               overflow: "hidden",
-              boxShadow:
-                "0 20px 60px rgba(15,23,42,0.12)",
+              boxShadow: "0 20px 60px rgba(15,23,42,0.12)",
             },
           }}
         >
@@ -114,9 +117,7 @@ const Profilemenu = () => {
               </Avatar>
 
               <Box>
-                <Typography fontWeight={700}>
-                  {user?.name || "User"}
-                </Typography>
+                <Typography fontWeight={700}>{user?.name || "User"}</Typography>
                 <Typography variant="body2" color="text.secondary">
                   {user?.email || "No email"}
                 </Typography>
@@ -126,10 +127,7 @@ const Profilemenu = () => {
 
           <Divider />
 
-          <MenuItem
-            onClick={handleMyAccount}
-            sx={{ gap: 1.5, py: 1.8 }}
-          >
+          <MenuItem onClick={handleMyAccount} sx={{ gap: 1.5, py: 1.8 }}>
             <RiUserLine size={18} />
             My Account
           </MenuItem>
