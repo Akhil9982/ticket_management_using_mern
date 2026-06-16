@@ -15,6 +15,10 @@ app.use(
   }),
 );
 
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
+
 // Routes - Endpoints
 app.use("/api/auth/users", authRoutes);
 app.use("/api/tickets", ticketRoutes);
