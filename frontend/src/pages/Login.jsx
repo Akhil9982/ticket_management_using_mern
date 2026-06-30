@@ -4,7 +4,11 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const onSubmit = async (data) => {
     try {
@@ -50,11 +54,14 @@ const Login = () => {
                     placeholder="Email address"
                     className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     required
+                    id="email"
                     autoComplete="email"
                     type="email"
-                    {...register("email")}
-                    id="email"
+                    {...register("email", { required: "Email is required" })}
                   />
+                  {errors.email && (
+                    <span className="form-error">{errors.email.message}</span>
+                  )}
                 </div>
                 <div className="mt-4">
                   <label className="sr-only" htmlFor="password">
@@ -65,10 +72,25 @@ const Login = () => {
                     className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     required
                     autoComplete="current-password"
-                    type="password"
-                    {...register("password")}
                     id="password"
+                    type="password"
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 charecters",
+                      },
+                      maxLength: {
+                        value: 12,
+                        message: "Password must be less than 12 charecters",
+                      },
+                    })}
                   />
+                  {errors.password && (
+                    <span className="form-error">
+                      {errors.password.message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div>
